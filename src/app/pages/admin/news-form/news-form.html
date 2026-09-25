@@ -1,0 +1,73 @@
+<section class="admin-page">
+  <div class="admin-head">
+    <h1>{{ isEdit ? 'Редактировать' : 'Создать' }} новость</h1>
+    <a routerLink="/admin/news">← К списку</a>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-main">
+      <label>
+        Заголовок
+        <input [(ngModel)]="form.title" (ngModelChange)="onTitleChange()" />
+      </label>
+
+      <label>
+        slug (URL)
+        <input [(ngModel)]="form.slug" />
+      </label>
+
+      <label>
+        Короткое описание
+        <input [(ngModel)]="form.description" />
+      </label>
+
+      <label>
+        Обложка баннера (URL)
+        <input [(ngModel)]="form.image" placeholder="/blog/cover.jpg" />
+      </label>
+
+      <div class="editor-wrap">
+        <div class="editor-label">Контент</div>
+        <app-rich-editor [(value)]="form.content"></app-rich-editor>
+      </div>
+    </div>
+
+    <div class="form-side">
+      <label>
+        Тип
+        <select [(ngModel)]="form.type">
+          <option value="project">Новость проекта</option>
+          <option value="server">Новость сервера</option>
+        </select>
+      </label>
+
+      @if (form.type === 'server') {
+        <label>
+          Сервер
+          <select [(ngModel)]="form.server">
+            @for (s of servers; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </label>
+      }
+
+      <label>
+        Дата публикации
+        <input type="date" [(ngModel)]="form.date" />
+      </label>
+
+      <label class="check">
+        <input type="checkbox" [(ngModel)]="form.featured" />
+        Featured
+      </label>
+
+      <label class="check">
+        <input type="checkbox" [(ngModel)]="form.published" />
+        Опубликовано
+      </label>
+
+      <button class="btn-primary" type="button" (click)="save()">Сохранить</button>
+    </div>
+  </div>
+</section>

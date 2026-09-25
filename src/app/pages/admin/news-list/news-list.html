@@ -1,0 +1,38 @@
+<section class="admin-page">
+  <div class="admin-head">
+    <h1>Новости</h1>
+    <a class="btn-primary" routerLink="/admin/news/new">+ Создать</a>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Обложка</th>
+        <th>Заголовок</th>
+        <th>Тип</th>
+        <th>Статус</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of items; track item.id) {
+        <tr>
+          <td><img [src]="item.image" class="thumb" alt="" /></td>
+          <td>
+            <strong>{{ item.title }}</strong>
+            <div class="slug">{{ item.slug }}</div>
+          </td>
+          <td>{{ item.type }}{{ item.server ? ' / ' + item.server : '' }}</td>
+          <td>
+            <span class="badge" [class.on]="item.published">{{ item.published ? 'Опубликовано' : 'Черновик' }}</span>
+            @if (item.featured) { <span class="badge feat">Featured</span> }
+          </td>
+          <td class="actions">
+            <a [routerLink]="['/admin/news/edit', item.id]">Изменить</a>
+            <button (click)="remove(item.id)">Удалить</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

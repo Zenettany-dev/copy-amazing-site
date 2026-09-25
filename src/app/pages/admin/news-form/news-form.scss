@@ -1,0 +1,125 @@
+.admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 24px 60px;
+}
+
+.admin-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  a {
+    color: #888;
+    text-decoration: none;
+    font-size: 14px;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 16px;
+
+  input, select {
+    font-weight: 400;
+    font-size: 14px;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    outline: none;
+
+    &:focus {
+      border-color: #fe802c;
+    }
+  }
+}
+
+.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+
+  input {
+    width: auto;
+  }
+}
+
+.editor-wrap {
+  margin-top: 8px;
+
+  .editor-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+  }
+}
+
+.ck.ck-editor {
+  width: 100%;
+}
+
+.ck-editor__editable {
+  min-height: 420px;
+  max-height: 700px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ck-content {
+  font-family: Roboto, sans-serif;
+
+  h1, h2, h3 {
+    font-weight: 800;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 12px 0;
+  }
+
+  figure.image {
+    margin: 16px 0;
+  }
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f72822, #fe802c);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

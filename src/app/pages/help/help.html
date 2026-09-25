@@ -1,0 +1,97 @@
+<section class="help-page">
+  <div class="help-header">
+    <h1 class="header-title">Чем мы можем Вам помочь?</h1>
+    <p class="header-subtitle">Ответы на разные вопросы, которые у Вас, скорее всего, появились</p>
+  </div>
+
+  <div class="help-content">
+    <div class="container">
+      <aside class="categories">
+        <a class="help-category item-green" href="mailto:support@wmazing.ru">
+          <div class="cat-icon">
+            <img src="/icon/mail-letter.svg" alt="" class="mail-icon" />
+          </div>
+          <div class="cat-text">
+            <div class="cat-title">Задать вопрос</div>
+            <div class="cat-desc">Задайте нам вопрос лично!</div>
+          </div>
+        </a>
+
+        @for (cat of categories; track cat.id) {
+          <div
+            class="help-category"
+            [class.active]="activeCategory === cat.id"
+            (click)="selectCategory(cat.id)"
+          >
+            <div class="cat-icon">
+              <img [src]="cat.icon" alt="" />
+            </div>
+            <div class="cat-text">
+              <div class="cat-title">{{ cat.title }}</div>
+              <div class="cat-desc">{{ cat.desc }}</div>
+            </div>
+          </div>
+        }
+      </aside>
+
+      <main class="faq-area">
+        @if (currentCategory) {
+          <div class="faq-header">
+            <img [src]="currentCategory.icon" alt="" class="faq-header-icon" />
+            <div class="faq-header-text">
+              <h2>{{ currentCategory.title }}</h2>
+              <p>{{ currentCategory.desc }}</p>
+            </div>
+          </div>
+
+          @if (currentCategory.id !== 'requirements') {
+            <div class="faq-list">
+              @for (item of currentCategory.items; track item.q; let i = $index) {
+                <div class="help-question-wrap">
+                  <div
+                    class="help-question"
+                    [class.open]="openIndex === i"
+                    (click)="toggle(i)"
+                  >
+                    <img src="/icon/question-right.svg" alt="" class="q-icon" />
+                    <span class="q-text">{{ item.q }}</span>
+                    @if (item.new) {
+                      <span class="new-badge">NEW</span>
+                    }
+                  </div>
+
+                  @if (openIndex === i) {
+                    <div class="faq-answer">
+                      <div [innerHTML]="item.a"></div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          @if (currentCategory.id === 'requirements') {
+            <div class="requirements">
+              @for (req of requirements; track req.title) {
+                <div class="req-block">
+                  <div class="req-title">
+                    <img [src]="req.icon" alt="" />
+                    <span>{{ req.title }}</span>
+                  </div>
+                  <div class="req-table">
+                    @for (row of req.rows; track row.label) {
+                      <div class="req-row">
+                        <span class="label">{{ row.label }}</span>
+                        <span class="value">{{ row.value }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        }
+      </main>
+    </div>
+  </div>
+</section>

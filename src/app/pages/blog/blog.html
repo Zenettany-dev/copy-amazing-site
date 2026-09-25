@@ -1,0 +1,110 @@
+<section class="blog-page">
+  <div class="container">
+    <div class="section-head">
+      <h1>НОВОСТИ ПРОЕКТА</h1>
+      <a class="archive-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4h12M2 8h12M2 12h8" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Архив новостей
+      </a>
+    </div>
+
+    @if (featured) {
+      <a class="featured-card" [routerLink]="['/blog', featured.slug]">
+        <div class="image-wrap">
+          <img class="image" [src]="featured.image" [alt]="featured.title" />
+        </div>
+        <div class="overlay">
+          <div class="date">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <g clip-path="url(#clip0)">
+                <path d="M7 0C3.14008 0 0 3.14008 0 7C0 10.8599 3.14008 14 7 14C10.8599 14 14 10.8599 14 7C14 3.14008 10.8599 0 7 0ZM10.3291 10.6208C10.2153 10.7345 10.066 10.7917 9.91667 10.7917C9.76733 10.7917 9.618 10.7345 9.50425 10.6208L6.58758 7.70408C6.47792 7.595 6.41667 7.44683 6.41667 7.29167V3.5C6.41667 3.17742 6.678 2.91667 7 2.91667C7.322 2.91667 7.58333 3.17742 7.58333 3.5V7.05017L10.3291 9.79592C10.5572 10.024 10.5572 10.3927 10.3291 10.6208Z" fill="#999"/>
+              </g>
+              <defs>
+                <clipPath id="clip0"><rect width="14" height="14" fill="white"/></clipPath>
+              </defs>
+            </svg>
+            {{ featured.dateLabel || featured.date }}
+          </div>
+          <h2 class="title">{{ featured.title }}</h2>
+          <p class="description">{{ featured.description }}</p>
+          <div class="action">
+            <span class="text">ПОСМОТРЕТЬ</span>
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none" class="arrow-icon">
+              <path d="M7 6.00002C7 6.21508 6.91597 6.43012 6.74825 6.59409L1.46804 11.7538C1.13215 12.0821 0.587565 12.0821 0.251814 11.7538C-0.0839379 11.4257 -0.0839379 10.8937 0.251814 10.5654L4.92404 6.00002L0.251976 1.43459C-0.0837752 1.10636 -0.0837752 0.574357 0.251976 0.24629C0.587728 -0.0820961 1.13231 -0.0820961 1.4682 0.24629L6.74842 5.40595C6.91616 5.57 7 5.78503 7 6.00002Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+    }
+
+    <div class="servers-section">
+      <div class="servers-head">
+        <h2>НОВОСТИ СЕРВЕРОВ</h2>
+
+        <div class="server-select" [class.opened]="serverOpen">
+          <div class="head" (click)="serverOpen = !serverOpen">
+            <div class="server-icon-wrap">
+              @if (selectedServer.color) {
+                <svg width="21" height="23" viewBox="-1 -1 129 115" fill="none">
+                  <path d="M89.216 0C93.527 0 97.511 2.296 99.667 6.022L125.384 50.478c2.155 3.727 2.155 8.318 0 12.044L99.667 106.978C97.511 110.705 93.527 113 89.216 113H37.784c-4.311 0-8.295-2.295-10.451-6.022L1.617 62.522c-2.156-3.727-2.156-8.318 0-12.044L27.333 6.022C29.489 2.296 33.473 0 37.784 0Z"
+                    [attr.fill]="selectedServer.color" stroke="#7d7d7d" stroke-width="2"/>
+                </svg>
+              } @else {
+                <svg width="12" height="11" viewBox="0 0 12 11" fill="none">
+                  <path d="M11.9684 10.6206L6.21749 0.1361C6.11784 -0.0456 5.85081 -0.0453 5.75153 0.1366L0.03135 10.6211C-0.0623 10.7928 0.0652 11 0.2645 11H2.127C2.225 11 2.315 10.947 2.361 10.862L5.75 4.571C5.849 4.388 6.119 4.388 6.218 4.571L9.612 10.862C9.658 10.947 9.748 11 9.846 11H11.735C11.935 11 12.062 10.792 11.968 10.621Z" fill="#535353"/>
+                  <path d="M7.991 10.761L6.128 7.302C6.066 7.187 5.897 7.187 5.836 7.302L3.981 10.761C3.924 10.869 4.003 10.997 4.127 10.997H7.845C7.969 10.997 8.049 10.868 7.991 10.761Z" fill="#535353"/>
+                </svg>
+              }
+            </div>
+            <span class="server-name">{{ selectedServer.name }}</span>
+            <svg width="14" height="7" viewBox="0 0 14 7" fill="none" class="arrow" [class.up]="serverOpen">
+              <path d="M7 0C7.251 0 7.502 0.084 7.693 0.252L13.713 5.532C14.096 5.868 14.096 6.412 13.713 6.748C13.33 7.084 12.709 7.084 12.326 6.748L7 2.076L1.674 6.748C1.291 7.084 0.67 7.084 0.287 6.748C-0.096 6.412 -0.096 5.868 0.287 5.532L6.307 0.252C6.498 0.084 6.749 0 7 0Z" fill="#7D7D7D"/>
+            </svg>
+          </div>
+
+          @if (serverOpen) {
+            <div class="content">
+              @for (s of servers; track s.name) {
+                <div class="item" (click)="selectServer(s)">
+                  <div class="server-icon-container">
+                    @if (s.color) {
+                      <svg width="21" height="23" viewBox="-1 -1 129 115" fill="none">
+                        <path d="M89.216 0C93.527 0 97.511 2.296 99.667 6.022L125.384 50.478c2.155 3.727 2.155 8.318 0 12.044L99.667 106.978C97.511 110.705 93.527 113 89.216 113H37.784c-4.311 0-8.295-2.295-10.451-6.022L1.617 62.522c-2.156-3.727-2.156-8.318 0-12.044L27.333 6.022C29.489 2.296 33.473 0 37.784 0Z"
+                          [attr.fill]="s.color" stroke="#7d7d7d" stroke-width="2"/>
+                      </svg>
+                    } @else {
+                      <svg width="12" height="11" viewBox="0 0 12 11" fill="none">
+                        <path d="M11.9684 10.6206L6.21749 0.1361C6.11784 -0.0456 5.85081 -0.0453 5.75153 0.1366L0.03135 10.6211C-0.0623 10.7928 0.0652 11 0.2645 11H2.127C2.225 11 2.315 10.947 2.361 10.862L5.75 4.571C5.849 4.388 6.119 4.388 6.218 4.571L9.612 10.862C9.658 10.947 9.748 11 9.846 11H11.735C11.935 11 12.062 10.792 11.968 10.621Z" fill="#535353"/>
+                        <path d="M7.991 10.761L6.128 7.302C6.066 7.187 5.897 7.187 5.836 7.302L3.981 10.761C3.924 10.869 4.003 10.997 4.127 10.997H7.845C7.969 10.997 8.049 10.868 7.991 10.761Z" fill="#535353"/>
+                      </svg>
+                    }
+                  </div>
+                  <span class="server-name">{{ s.name }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      @if (serverNews.length === 0) {
+        <div class="empty-state">У сервера пока нет новостей</div>
+      } @else {
+        <div class="server-news-list">
+          @for (item of serverNews; track item.id) {
+            <a class="news-card" [routerLink]="['/blog', item.slug]">
+              <img [src]="item.image" [alt]="item.title" />
+              <div class="info">
+                <span class="date">{{ item.dateLabel || item.date }}</span>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.description }}</p>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

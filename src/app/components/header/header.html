@@ -1,0 +1,159 @@
+<header
+  class="header"
+  [class.collapsed]="isCollapsed && !isMobileMenuOpen"
+  [class.mobile-open]="isMobileMenuOpen"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div class="header-inner desktop-only">
+    <nav class="nav">
+      <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ГЛАВНАЯ</a>
+      <a class="nav-link" routerLink="/blog" routerLinkActive="active">БЛОГ</a>
+      <a class="nav-link" routerLink="/donate" routerLinkActive="active">ДОНАТ</a>
+
+      <div class="nav-item dropdown" (mouseenter)="openDropdown = true" (mouseleave)="openDropdown = false">
+        <button type="button" class="nav-link dropdown-toggle">
+          РЕСУРСЫ
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        @if (openDropdown) {
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="/help"><img src="/icon/help.svg" alt="" /><span>Помощь</span></a>
+            <a class="dropdown-item"><img src="/icon/forum.svg" alt="" /><span>Форум</span></a>
+            <a class="dropdown-item"><img src="/icon/rules.svg" alt="" /><span>Правила</span></a>
+            <a class="dropdown-item"><img src="/icon/top.svg" alt="" /><span>Топы</span></a>
+            <a class="dropdown-item"><img src="/icon/flag.svg" alt="" /><span>Турниры</span></a>
+            <a class="dropdown-item"><img src="/icon/wiki.svg" alt="" /><span>Вики по игре</span></a>
+          </div>
+        }
+      </div>
+
+      @if (auth.user()) {
+        <div class="nav-item games-dropdown" (mouseenter)="openGames = true" (mouseleave)="openGames = false">
+          <button type="button" class="nav-link dropdown-toggle games-link">
+            МИНИ-ИГРЫ
+            <span class="dot-blue"></span>
+          </button>
+          @if (openGames) {
+            <div class="dropdown-menu games-menu">
+              <a class="dropdown-item"><img class="icon-black" src="/icon/roulette.svg" alt="" /><span>Бесплатная</span></a>
+              <a class="dropdown-item"><img src="/icon/roulette-gold.svg" alt="" /><span>Золотая</span></a>
+              <a class="dropdown-item"><img src="/icon/roulette-brilliant.svg" alt="" /><span>Бриллиантовая</span></a>
+              <a class="dropdown-item"><img src="/icon/coinflip.svg" alt="" /><span>Коинфлип</span></a>
+            </div>
+          }
+        </div>
+      }
+    </nav>
+
+    <div class="actions">
+      @if (!auth.user()) {
+        <button class="btn-cabinet" type="button" (click)="openLogin()">Личный кабинет</button>
+        <div class="divider"></div>
+        <button class="btn-download" type="button">СКАЧАТЬ ИГРУ</button>
+      } @else {
+        <div class="user-block">
+          <button type="button" class="user-btn" (click)="toggleAccountMenu($event)">
+            <span class="user-name">{{ auth.shortName(auth.user()!) }}</span>
+            <img
+              class="avatar"
+              [src]="auth.user()!.avatar || '/pages/avatar-placeholder.png'"
+              alt=""
+              (error)="onAvatarError($event)"
+            />
+          </button>
+
+          <button type="button" class="dots-btn" (click)="toggleDotsMenu($event)" aria-label="Меню">
+            <img src="/icon/menu-tripple-horizontally.svg" alt="" />
+          </button>
+
+          @if (openAccountMenu) {
+            <div class="user-menu account-menu">
+              @for (acc of accounts; track acc.name + '-' + (acc.server || '')) {
+                <button
+                  type="button"
+                  class="user-menu-item"
+                  [class.current]="acc.name === auth.user()!.name && acc.server === auth.user()!.server"
+                  (click)="switchAccount(acc)"
+                >
+                  <img
+                    class="avatar sm"
+                    [src]="acc.avatar || '/pages/avatar-placeholder.png'"
+                    alt=""
+                    (error)="onAvatarError($event)"
+                  />
+                  <span>{{ acc.displayName }}</span>
+                </button>
+              }
+              @if (accounts.length < 4) {
+                <button type="button" class="user-menu-item add" (click)="openLogin()">
+                  <img src="/icon/people-add-green.svg" alt="" />
+                  <span>Войти в другой аккаунт</span>
+                </button>
+              }
+            </div>
+          }
+
+          @if (openDotsMenu) {
+            <div class="user-menu dots-menu">
+              <button type="button" class="user-menu-item" (click)="openDotsMenu = false">
+                <img src="/icon/settings.svg" alt="" />
+                <span>Настройки</span>
+              </button>
+              <button type="button" class="user-menu-item" (click)="openDotsMenu = false">
+                <img src="/icon/wallet.svg" alt="" />
+                <span>Пополнение счета</span>
+              </button>
+              <button type="button" class="user-menu-item danger" (click)="logout()">
+                <img src="/icon/logout.svg" alt="" />
+                <span>Выйти из аккаунта</span>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</header>
+
+<button class="burger-btn" [class.open]="isMobileMenuOpen" (click)="toggleMobileMenu()" aria-label="Меню">
+  <img src="/icon/menu-hamb.svg" alt="" />
+</button>
+
+@if (isMobileMenuOpen) {
+  <div class="mobile-overlay" (click)="closeMobile()"></div>
+  <div class="mobile-menu" (click)="$event.stopPropagation()">
+    <div class="mobile-handle"></div>
+    <div class="mobile-actions">
+      @if (!auth.user()) {
+        <button class="btn-cabinet mobile" type="button" (click)="openLogin()">Личный кабинет</button>
+      } @else {
+        <div class="mobile-user">
+          <img
+            class="avatar"
+            [src]="auth.user()!.avatar || '/pages/avatar-placeholder.png'"
+            alt=""
+            (error)="onAvatarError($event)"
+          />
+          <span>{{ auth.user()!.displayName }}</span>
+        </div>
+        <button class="btn-cabinet mobile" type="button" (click)="logout()">Выйти</button>
+      }
+      <button class="btn-download mobile" type="button">СКАЧАТЬ ИГРУ</button>
+    </div>
+    <div class="mobile-divider"></div>
+    <nav class="mobile-nav">
+      <a class="mobile-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobile()">ГЛАВНАЯ</a>
+      <a class="mobile-link" routerLink="/blog" routerLinkActive="active" (click)="closeMobile()">БЛОГ</a>
+      <a class="mobile-link" routerLink="/donate" routerLinkActive="active" (click)="closeMobile()">ДОНАТ</a>
+      <a class="mobile-link" routerLink="/help" (click)="closeMobile()">РЕСУРСЫ</a>
+      @if (auth.user()) {
+        <a class="mobile-link" (click)="closeMobile()">МИНИ-ИГРЫ</a>
+      }
+    </nav>
+  </div>
+}
+
+<app-auth-modal />

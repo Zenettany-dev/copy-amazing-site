@@ -1,0 +1,34 @@
+@if (open) {
+  <div class="viewer" (click)="close()">
+    <button class="btn-close" type="button" (click)="close(); $event.stopPropagation()">
+      <svg viewBox="0 0 9 9" width="18" height="18">
+        <polygon fill="#fff" points="1.2,0 5.8,4.5 1.2,9 0,7.7 3.3,4.5 0,1.3"/>
+        <polygon fill="#fff" points="7.8,9 3.3,4.5 7.8,0 9,1.3 5.7,4.5 9,7.7"/>
+      </svg>
+    </button>
+
+    @if (items.length > 1) {
+      <button class="btn-switch left" type="button" (click)="prev($event)">
+        <svg viewBox="0 0 9 15" width="22" height="36">
+          <path fill="#fff" d="M5.6,7.5L0,1.8L1.7,0L9,7.5L1.7,15L0,13.2L5.6,7.5z" transform="scale(-1,1) translate(-9,0)"/>
+        </svg>
+      </button>
+    }
+
+    <div class="viewer-body" (click)="$event.stopPropagation()">
+      @if (current?.type === 'video') {
+        <video [src]="current!.src" controls autoplay></video>
+      } @else if (current) {
+        <img [src]="current.src" alt="" />
+      }
+    </div>
+
+    @if (items.length > 1) {
+      <button class="btn-switch right" type="button" (click)="next($event)">
+        <svg viewBox="0 0 9 15" width="22" height="36">
+          <path fill="#fff" d="M5.6,7.5L0,1.8L1.7,0L9,7.5L1.7,15L0,13.2L5.6,7.5z"/>
+        </svg>
+      </button>
+    }
+  </div>
+}

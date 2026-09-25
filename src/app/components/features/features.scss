@@ -1,0 +1,255 @@
+.features {
+  position: relative;
+  display: flex;
+  min-height: 700px;
+  padding-top: 140px;
+  padding-bottom: 87px;
+  background-color: #fff;
+  background-image: 
+    url(/pages/features-bg-1.png),
+    url(/pages/features-bg-2.png);
+  background-repeat: no-repeat, no-repeat;
+  background-position: 0px -299px, right bottom;
+  background-size: 900px 1063px, cover;
+  overflow: hidden;
+}
+
+.features-left {
+  width: 42%;
+  display: flex;
+  align-items: center;
+  padding-left: 80px;
+  color: #212121;
+  z-index: 2;
+}
+
+.feature-content {
+  max-width: 420px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+
+  img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+h2 {
+  font-family: Roboto, sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  color: #212121;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 36px;
+  min-height: 48px;
+}
+
+.feature-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #e6e6e6;
+  background: #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0);
+  }
+
+  &:hover {
+    background: #d6d6d6;
+  }
+}
+
+.counter {
+  font-size: 14px;
+  color: #888;
+  min-width: 40px;
+  text-align: center;
+}
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 261px;
+  height: 68px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #f72822 0%, #fe802c 100%);
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.03);
+  }
+}
+
+.features-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 60px 40px 20px;
+  z-index: 2;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.feature-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+.progress-circle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.35);
+    stroke-width: 3.5;
+  }
+
+  .circle {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .features {
+    flex-direction: column;
+    min-height: auto;
+    padding: 48px 16px 110px;
+    background-image: none;
+  }
+
+  .features-left {
+    width: 100%;
+    padding: 0;
+    order: 1;
+  }
+
+  .feature-content {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-icon {
+    margin: 0 auto 18px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+    max-width: 320px;
+    min-height: auto;
+  }
+
+  .features-right {
+    width: 100%;
+    padding: 0;
+    order: 2;
+    margin: 8px 0 24px;
+  }
+
+  .image-wrapper {
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .feature-nav {
+    order: 3;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .play-btn {
+    order: 4;
+    width: calc(100% - 32px);
+    max-width: 340px;
+    height: 54px;
+    margin: 0 auto;
+  }
+
+  .progress-circle {
+    width: 36px;
+    height: 36px;
+    top: 12px;
+    right: 12px;
+  }
+}

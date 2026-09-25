@@ -1,0 +1,85 @@
+@if (open) {
+  <div class="overlay" (click)="close()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="left">
+        <img [src]="charSrc" alt="" />
+      </div>
+
+      <div class="right">
+        <button type="button" class="close" (click)="close()" aria-label="Закрыть">
+          <svg width="12" height="12" viewBox="0 0 9 9">
+            <polygon points="1.2,0 5.8,4.5 1.2,9 0,7.7 3.3,4.5 0,1.3"/>
+            <polygon points="7.8,9 3.3,4.5 7.8,0 9,1.3 5.7,4.5 9,7.7"/>
+          </svg>
+        </button>
+
+        <h2>Вход в аккаунт</h2>
+
+        <label class="field">
+          <span>Сервер</span>
+          <div class="server-wrap">
+            <button type="button" class="server-btn" (click)="serverOpen = !serverOpen">
+              @if (selectedServer) {
+                <span class="dot" [style.background]="selectedServer.color"></span>
+                <span>{{ selectedServer.name }}</span>
+              } @else {
+                <span class="placeholder">Выберите сервер</span>
+              }
+              <img class="arrow" src="/icon/arrow.svg" alt="" [class.open]="serverOpen" />
+            </button>
+
+            <div class="server-list" [class.shown]="serverOpen">
+              @for (s of servers; track s.name) {
+                <button type="button" class="server-item" (click)="selectServer(s)">
+                  <span class="dot" [style.background]="s.color"></span>
+                  <span>{{ s.name }}</span>
+                </button>
+              }
+            </div>
+          </div>
+        </label>
+
+        <label class="field">
+          <span>Никнейм</span>
+          <input type="text" [(ngModel)]="name" autocomplete="username" />
+        </label>
+
+        <label class="field">
+          <span>Пароль</span>
+          <input type="password" [(ngModel)]="password" autocomplete="current-password" />
+        </label>
+
+        <p class="hint">
+          Вы можете восстановить свой пароль, если Вы
+          <a href="#">потеряли доступ</a> к своему аккаунту
+        </p>
+
+        <label class="privacy">
+          <span class="box" [class.active]="privacy" (click)="privacy = !privacy; $event.preventDefault()">
+            @if (privacy) {
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M15.6282 2.6158C15.1332 2.1201 14.3293 2.12041 13.8336 2.6158L5.75659 10.6931L2.1667 7.10328C1.671 6.60757 0.867479 6.60757 0.371777 7.10328C-0.123926 7.59898 -0.123926 8.4025 0.371777 8.8982L4.85894 13.3854C5.10664 13.6331 5.43143 13.7572 5.75625 13.7572C6.08107 13.7572 6.40617 13.6334 6.65387 13.3854L15.6282 4.4107C16.1239 3.91534 16.1239 3.11147 15.6282 2.6158Z" fill="white"/>
+              </svg>
+            }
+          </span>
+          <span class="privacy-text">
+            Я даю согласие на обработку персональных данных в соответствии с
+            <a href="#" (click)="$event.stopPropagation()">политикой конфиденциальности</a>
+          </span>
+        </label>
+
+        @if (error) {
+          <div class="error">{{ error }}</div>
+        }
+
+        <button type="button" class="submit" [disabled]="loading" (click)="submit()">
+          {{ loading ? 'Вход...' : 'Войти в аккаунт' }}
+        </button>
+
+        <p class="footer-note">
+          Это окно для входа в уже существующий аккаунт, создать персонажа Вы можете в игре после её установки
+        </p>
+      </div>
+    </div>
+  </div>
+}

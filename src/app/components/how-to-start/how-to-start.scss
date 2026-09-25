@@ -1,0 +1,318 @@
+.how-to-start {
+  background: #f8f8f8;
+  padding: 100px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 70px;
+
+  h2 {
+    font-family: Roboto, sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    color: #212121;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 16px;
+    color: #777;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.step {
+  .step-badge {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #212121;
+    margin-bottom: 14px;
+  }
+
+  .desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: #555;
+    margin-bottom: 16px;
+  }
+}
+
+.step-1 {
+  .index-button-start {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 26px 0;
+    width: 280px;
+    border: none;
+    border-radius: 5px;
+    gap: 10px;
+    background-color: #37a854;
+    background-image: url(/pages/orel.svg), linear-gradient(90deg, #37a854 55%, #4cd06e 100%);
+    background-repeat: no-repeat, no-repeat;
+    background-position: right -33px bottom -10px, center;
+    background-size: 115px auto, 100% 100%;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s linear;
+    overflow: visible;
+    margin-bottom: 18px;
+
+    .btn-icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .index-button-start--text {
+      font-family: Roboto, sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: 0;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #666;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .separator {
+      color: #ccc;
+    }
+  }
+
+  .terms {
+    font-size: 13px;
+    color: #999;
+    text-decoration: none;
+
+    span {
+      text-decoration: underline;
+      color: #777;
+    }
+
+    &:hover span {
+      color: #333;
+    }
+  }
+}
+
+.illustration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.step-2 {
+  .rules-btn {
+    margin-top: 10px;
+    width: 191px;
+    height: 48px;
+    background: transparent;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    color: #333;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #3c3c3c;
+      border-color: #3c3c3c;
+      color: #fff;
+    }
+  }
+}
+
+.support-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 22px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 30px;
+  background: url(/pages/contact-support-banner-background.svg) no-repeat right bottom / contain, #f3f3f3;
+  border: 1px solid #e4e4e4;
+}
+
+.support-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+
+  .question-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.support-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-chat,
+.btn-faq {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 232px;
+  height: 61px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 13px;
+    height: 13px;
+    opacity: 0.9;
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-chat {
+  background: linear-gradient(90deg, #009ada 0%, #4ac9ff 100%);
+}
+
+.btn-faq {
+  background: linear-gradient(90deg, #f72121 0%, #fe802c 100%);
+}
+
+@media (max-width: 1100px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    text-align: center;
+  }
+
+  .step-1,
+  .step-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .illustration {
+    order: -1;
+  }
+
+  .index-button-start {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .header h2 {
+    font-size: 28px;
+  }
+
+  .support-banner {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .support-left {
+    justify-content: center;
+  }
+
+  .support-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-chat,
+  .btn-faq {
+    width: 100%;
+    max-width: 280px;
+  }
+}

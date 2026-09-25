@@ -1,0 +1,222 @@
+<section class="donate-page">
+  <div class="bg"></div>
+
+  <div class="x2-line" [class.visible]="showX2">
+    <div class="x2-track">
+      @for (i of lineItems; track i) {
+        <span>2Х ДОНАТ</span>
+      }
+    </div>
+    <div class="x2-track">
+      @for (i of lineItems; track i) {
+        <span>2Х ДОНАТ</span>
+      }
+    </div>
+  </div>
+
+  <div class="donate-header">
+    <img src="/donate/donate-bg-coin-1.png" class="coin coin-1" alt="" />
+    <img src="/donate/donate-bg-coin-2.png" class="coin coin-2" alt="" />
+    <img src="/donate/donate-bg-coin-3.png" class="coin coin-3" alt="" />
+    <img src="/donate/donate-char.png" class="char" alt="" />
+
+    <div class="group">
+      <div class="left">
+        <div class="packs">
+          <div class="pack-list">
+            @for (pack of packs; track pack.id) {
+              <div
+                class="pack-card"
+                [class.expanded]="hoveredPack === pack.id"
+                [class.selected]="selectedPack === pack.id"
+                (mouseenter)="hoveredPack = pack.id"
+                (mouseleave)="hoveredPack = null"
+                (click)="selectPack(pack)"
+              >
+                <div class="card">
+                  <div class="head">
+                    <img [src]="'/donate/' + pack.image" class="bg-image" alt="" />
+
+                    <div class="header">
+                      <div class="title">{{ pack.title }}</div>
+                      @if (pack.bonus) {
+                        <div class="percent" [style.background]="pack.bonusColor">+{{ pack.bonus }}%</div>
+                      }
+                    </div>
+
+                    <div class="amz-price">
+                      <div class="new-price">
+                        {{ pack.amz }}
+                        <div class="label">AMZ</div>
+                      </div>
+                    </div>
+
+                    <div class="rub-price">{{ pack.price }} ₽</div>
+
+                    @if (selectedPack === pack.id) {
+                      <div class="chosen-badge">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M10 3L4.5 8.5L2 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Выбрано
+                      </div>
+                    }
+                  </div>
+
+                  <div class="content">
+                    <div class="description">{{ pack.description }}</div>
+                    <div class="button" [class.chosen]="selectedPack === pack.id">
+                      {{ selectedPack === pack.id ? 'Выбрано' : 'Выбрать' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="packs-note">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path opacity="0.4" d="M7.5 0C3.36445 0 0 3.36445 0 7.5C0 11.6356 3.36445 15 7.5 15C11.6356 15 15 11.6351 15 7.5C15 3.36493 11.6351 0 7.5 0ZM8.03571 10.1786C8.03571 10.4744 7.79587 10.7143 7.5 10.7143C7.20413 10.7143 6.96429 10.4744 6.96429 10.1786V6.96428C6.96429 6.66842 7.20413 6.42857 7.5 6.42857C7.79587 6.42857 8.03571 6.66842 8.03571 6.96429V10.1786ZM8.03571 4.82143C8.03571 5.1173 7.79587 5.35714 7.5 5.35714C7.20413 5.35714 6.96429 5.1173 6.96429 4.82143C6.96429 4.52556 7.20413 4.28571 7.5 4.28571C7.79587 4.28571 8.03571 4.52556 8.03571 4.82143Z" fill="white"/>
+          </svg>
+          Условия временные и актуальны пока Вы находитесь на странице
+        </div>
+
+        <div class="plus-banner">
+          <img src="/donate/amz-plus-banner.jpg" alt="Black + Amazing Plus" />
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="form-card">
+          <h2>Пополнение баланса</h2>
+
+          <div class="field server">
+            <div class="selector-server" (click)="serverOpen = !serverOpen">
+              <div class="selector-server-value">
+                @if (selectedServer) {
+                  <span class="dot" [style.background]="selectedServer.color"></span>
+                  {{ selectedServer.name }}
+                } @else {
+                  Выберите сервер
+                }
+              </div>
+              <div class="selector-server-icon" [class.open]="serverOpen"></div>
+            </div>
+
+            @if (serverOpen) {
+              <div class="selector-server-variants">
+                @for (s of servers; track s.name) {
+                  <div class="selector-server-variant" (click)="selectServer(s); $event.stopPropagation()">
+                    <div class="selector-server-variant-figure" [style.background]="s.color"></div>
+                    <div class="selector-server-variant-name">{{ s.name }}</div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="field">
+            <input type="text" placeholder="Введите ник персонажа" />
+          </div>
+
+          <div class="field amount-field">
+            <input
+              type="number"
+              placeholder="Сумма пополнения"
+              [(ngModel)]="amount"
+              (ngModelChange)="updateProgress()"
+            />
+            <div class="rate">
+              {{ amount || 0 }} AMZ
+              <div class="info-icon" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false">
+                <svg width="20" height="18" viewBox="0 0 20 18" fill="none">
+                  <path d="M10 0C5.02571 0 1 4.02525 1 9C1 13.9742 5.02525 18 10 18C14.9743 18 19 13.9747 19 9C19 4.02571 14.9747 0 10 0ZM9.73369 13.2124C9.22428 13.2124 8.83334 12.7859 8.83334 12.3002C8.83334 11.8026 9.23612 11.388 9.73369 11.388C10.2313 11.388 10.6459 11.8026 10.6459 12.3002C10.6459 12.7859 10.2431 13.2124 9.73369 13.2124ZM11.0842 8.604C10.4326 9.11341 10.4207 9.46881 10.4207 10.0848C10.4207 10.31 10.3023 10.5706 9.72181 10.5706C9.23605 10.5706 9.07026 10.3929 9.07026 9.77685C9.07026 8.75802 9.52043 8.2723 9.86398 7.97614C10.2549 7.64441 10.9184 7.2772 10.9184 6.6375C10.9184 6.09251 10.4445 5.83189 9.85213 5.83189C8.64378 5.83189 8.90443 6.74413 8.26465 6.74413C7.9448 6.74413 7.55386 6.53084 7.55386 6.06885C7.55386 5.42914 8.28835 4.48137 9.88768 4.48137C11.404 4.48137 12.411 5.32252 12.411 6.43609C12.411 7.54966 11.404 8.35523 11.0842 8.604Z" fill="#828282"/>
+                </svg>
+
+                @if (showTooltip) {
+                  <div class="info-tooltip">
+                    Это ожидаемая сумма, если условия пополнения не изменятся<br><br>
+                    Итоговую сумму Вы увидите на странице подтверждения платежа
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="email" placeholder="Введите почтовый ящик" />
+          </div>
+
+          <div class="amount-progress">
+            <div class="amount-progress-labels" [style.--progress]="progress + '%'">
+              <div class="scale-item">100 ₽</div>
+              <div class="scale-item">+5%<br><small>от 1000 ₽</small></div>
+              <div class="scale-item">+10%<br><small>от 1500 ₽</small></div>
+              <div class="scale-item">+15%<br><small>от 2000 ₽</small></div>
+              <div class="scale-item">+20%<br><small>от 2500 ₽</small></div>
+              <div class="scale-item">15000 ₽</div>
+            </div>
+          </div>
+
+          <label class="agree" [class.active]="agreed" (click)="agreed = !agreed">
+            <div class="box">
+              @if (agreed) {
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="box__marker">
+                  <g clip-path="url(#clip0)">
+                    <path d="M15.6282 2.6158C15.1332 2.1201 14.3293 2.12041 13.8336 2.6158L5.75659 10.6931L2.1667 7.10328C1.671 6.60757 0.867479 6.60757 0.371777 7.10328C-0.123926 7.59898 -0.123926 8.4025 0.371777 8.8982L4.85894 13.3854C5.10664 13.6331 5.43143 13.7572 5.75625 13.7572C6.08107 13.7572 6.40617 13.6334 6.65387 13.3854L15.6282 4.4107C16.1239 3.91534 16.1239 3.11147 15.6282 2.6158Z" fill="white"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0"><rect width="16" height="16" fill="white"/></clipPath>
+                  </defs>
+                </svg>
+              }
+            </div>
+            <span>Я даю согласие на обработку персональных данных в соответствии с политикой конфиденциальности</span>
+          </label>
+
+          <button class="submit-btn" [disabled]="!agreed">ПРОДОЛЖИТЬ</button>
+        </div>
+
+        <div class="warning-banner">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <g opacity="0.8" clip-path="url(#clip0)">
+              <path d="M7 0C10.8597 0 14 3.14027 14 7C14 10.8597 10.8597 14 7 14C3.14027 14 0 10.8597 0 7C0 3.14027 3.14027 0 7 0ZM7 12.25C9.89475 12.25 12.25 9.89475 12.25 7C12.25 5.89515 11.915 4.85067 11.2781 3.95943L3.95943 11.2781C4.85067 11.915 5.89515 12.25 7 12.25ZM2.72185 10.0406L10.0406 2.72185C9.14933 2.08496 8.10485 1.75 7 1.75C4.10525 1.75 1.75 4.10525 1.75 7C1.75 8.10485 2.08496 9.14933 2.72185 10.0406Z" fill="black"/>
+            </g>
+            <defs>
+              <clipPath id="clip0"><rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14 0)"/></clipPath>
+            </defs>
+          </svg>
+          Перенос аккаунтов на серверах FIRE и LIME ограничен
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bonuses">
+    @for (b of bonuses; track b.percent) {
+      <div class="bonus-card">
+        <div class="percent">+{{ b.percent }}%</div>
+        <div class="from">При пополнении<br>от {{ b.from }} ₽</div>
+        <div class="total" [style.background]="b.color">
+          Итого<br><strong>{{ b.total }} AMZ</strong>
+        </div>
+      </div>
+    }
+  </div>
+
+  <p class="bonus-note">
+    Акция не распространяется на акцию «2Х Донат»<br>
+    Например, при пополнении от 1000₽ с акцией «2Х Донат» Вы получите 2050 AMZ
+  </p>
+
+  <div class="extra-info">
+    <h3>Дополнительная информация</h3>
+    <div class="extra-links">
+      <a href="#">Публичная оферта</a>
+      <a href="#">Политика конфиденциальности</a>
+      <a href="#">Политика возвратов платежей</a>
+      <a href="#">Политика безопасности</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+@if (item) {
+  <section class="news-detail">
+    <div class="hero-banner">
+      <img class="hero-img" [src]="item.image" [alt]="item.title" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <div class="date">{{ dateLabel }}</div>
+          <h1>{{ item.title }}</h1>
+          <p class="desc">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <a class="back" routerLink="/blog">← Назад к новостям</a>
+      <div class="body" [innerHTML]="safeContent"></div>
+    </div>
+  </section>
+
+  <app-media-viewer
+    [open]="viewerOpen"
+    [items]="mediaItems"
+    [index]="viewerIndex"
+    (closed)="closeViewer()"
+  />
+} @else {
+  <section class="news-detail">
+    <div class="container" style="padding-top: 120px;">
+      <p>Новость не найдена</p>
+      <a class="back" routerLink="/blog">← К списку</a>
+    </div>
+  </section>
+}

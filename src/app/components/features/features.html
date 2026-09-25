@@ -1,0 +1,50 @@
+<section class="features">
+  <div class="features-left">
+    <div class="feature-content">
+      <div class="feature-icon" [style.background]="current.color">
+        <img [src]="'/icon/' + current.icon" alt="" />
+      </div>
+
+      <h2>{{ current.title }}</h2>
+      <p>{{ current.text }}</p>
+
+      <div class="feature-nav">
+        <button class="nav-btn" (click)="prev()">
+          <img src="/pages/arrow-left.svg" alt="" />
+        </button>
+        <span class="counter">{{ currentIndex + 1 }} / {{ features.length }}</span>
+        <button class="nav-btn" (click)="next()">
+          <img src="/pages/arrow-right.svg" alt="" />
+        </button>
+      </div>
+
+      <button class="play-btn">
+        <img src="/pages/windows.svg" alt="" />
+        ИГРАТЬ БЕСПЛАТНО
+      </button>
+    </div>
+  </div>
+
+  <div class="features-right">
+    <div class="image-wrapper">
+      <img
+        [src]="'/pages/features/' + current.image"
+        [alt]="current.title"
+        class="feature-image"
+      />
+      <div class="progress-circle">
+        <svg viewBox="0 0 36 36">
+          <circle class="circle-bg" cx="18" cy="18" r="15.5"></circle>
+          <circle
+            class="circle"
+            cx="18"
+            cy="18"
+            r="15.5"
+            [attr.stroke-dasharray]="circumference"
+            [attr.stroke-dashoffset]="dashOffset"
+          ></circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

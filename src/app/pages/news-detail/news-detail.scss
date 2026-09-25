@@ -1,0 +1,250 @@
+.news-detail {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  overflow-x: hidden;
+}
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.25) 45%,
+      transparent 100%
+    );
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-content {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px;
+    color: #fff;
+  }
+
+  .date {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: #31313180;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(7.5px);
+    border-radius: 300px;
+    font-size: 13px;
+    color: #ccc;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: Roboto, sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+
+  .desc {
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.75;
+    margin: 0;
+  }
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+
+  &:hover {
+    color: #333;
+  }
+}
+
+.body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+
+  :deep(h1),
+  :deep(h2),
+  :deep(h3) {
+    font-weight: 800;
+    color: #212121;
+    margin: 28px 0 14px;
+  }
+
+  :deep(p) {
+    margin: 0 0 14px;
+  }
+
+  :deep(ul),
+  :deep(ol) {
+    padding-left: 22px;
+    margin: 0 0 14px;
+  }
+
+  :deep(li) {
+    margin-bottom: 6px;
+  }
+
+  :deep(a) {
+    color: #f72822;
+  }
+
+  :deep(blockquote) {
+    border-left: 4px solid #fe802c;
+    padding: 12px 16px;
+    background: #fff;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  :deep(.bb-box) {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+
+    &.green {
+      background: #3cb75b;
+      color: #fff;
+    }
+
+    &.gray {
+      background: #f0f0f0;
+      color: #444;
+    }
+  }
+
+  :deep(.news-hr) {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: 40px;
+    margin-bottom: 28px;
+    padding: 22.5px calc(50vw - 50%);
+    box-sizing: border-box;
+    background:
+      url(/blog/h1-bg-left.png) top left no-repeat,
+      url(/blog/h1-bg-right.png) top right no-repeat,
+      #ebeced;
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    color: #222;
+  }
+
+  :deep(figure.news-image) {
+    position: relative;
+    display: block;
+    margin: 20px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0;
+      border-radius: 14px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 60px;
+      height: 60px;
+      margin: -30px 0 0 -30px;
+      background-color: #eb3e2e;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 30px;
+      height: 30px;
+      margin: -15px 0 0 -15px;
+      background-color: #fff;
+      -webkit-mask-image: url(/icon/eye.svg);
+      mask-image: url(/icon/eye.svg);
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &:hover::before,
+    &:hover::after {
+      opacity: 0.9;
+    }
+  }
+
+  :deep(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 14px;
+    display: block;
+    margin: 20px 0;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 300px;
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .desc {
+      font-size: 15px;
+    }
+  }
+
+  .container {
+    padding: 24px 16px 0;
+  }
+}

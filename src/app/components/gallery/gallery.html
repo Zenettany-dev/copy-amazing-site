@@ -1,0 +1,37 @@
+<section class="gallery-section">
+  <div class="gallery-header">
+    <h2>ПО-НАСТОЯЩЕМУ ИНТЕРЕСНО</h2>
+    <p>Посмотрите реальные скриншоты и видео из игры</p>
+  </div>
+
+  <div class="gallery-wrapper" #wrapper>
+    <div class="gallery-fade left"></div>
+    <div class="gallery-fade right"></div>
+
+    <div class="gallery-track" #track>
+      <div class="gallery-row row-1">
+        @for (img of row1; track $index) {
+          <div class="gallery-item">
+            <img [src]="'/pages/gallery/' + img" [alt]="img" />
+          </div>
+        }
+      </div>
+
+      <div class="gallery-row row-2">
+        @for (img of row2; track $index) {
+          <div class="gallery-item">
+            <img [src]="'/pages/gallery/' + img" [alt]="img" />
+          </div>
+        }
+      </div>
+
+      <div class="gallery-row row-3">
+        @for (img of row3; track $index) {
+          <div class="gallery-item">
+            <img [src]="'/pages/gallery/' + img" [alt]="img" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

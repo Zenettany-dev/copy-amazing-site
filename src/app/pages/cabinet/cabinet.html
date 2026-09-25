@@ -1,0 +1,209 @@
+<app-header />
+
+<section class="cabinet">
+  <div class="cabinet-hero">
+    <img class="hero-bg" src="/profile/header-account.jpg" alt="" />
+    <div class="hero-inner">
+      <h1>Мой аккаунт</h1>
+    </div>
+  </div>
+
+  <div class="cabinet-body">
+    <div class="tabs">
+      <button type="button" class="tab active">Персонаж</button>
+      <button type="button" class="tab">Настройки</button>
+      <button type="button" class="tab">Аудиозаписи</button>
+      <button type="button" class="tab">Чит-коды</button>
+      <button type="button" class="tab">Жалобы</button>
+      <button type="button" class="tab">Призы</button>
+    </div>
+
+    @if (false) {
+      <div class="ban-banner">Аккаунт заблокирован! Причина: Чит</div>
+      <div class="ban-banner">Аккаунт деактивирован! Причина: Чит</div>
+    }
+
+    @if (loading) {
+      <p class="state">Загрузка...</p>
+    } @else if (error) {
+      <p class="state error">{{ error }}</p>
+    } @else if (account) {
+      <div class="account-view">
+        <div class="account-view-left">
+          <div class="account-view-avatar" (click)="openAvatar()">
+            <img [src]="selectedAvatar" alt="" />
+          </div>
+          <div class="meta-card">
+            <div class="meta-row">
+              <span>Номер аккаунта</span>
+              <strong>#{{ account.id }}</strong>
+            </div>
+            <div class="meta-row">
+              <span>Предупреждения</span>
+              <strong>Нет</strong>
+            </div>
+            <div class="meta-row">
+              <span>Донат</span>
+              <strong>{{ account.donate }} AMZ</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="account-view-right">
+          <div class="head-row">
+            <div class="name-wrap">
+              <h2>{{ account.name }}</h2>
+              @if (serverNum) {
+                <span class="server-badge">{{ serverNum }} СЕРВЕР</span>
+              }
+            </div>
+          </div>
+
+          <div class="account-view-section">
+            <div class="account-view-section-header">ОБЩАЯ СТАТИСТИКА</div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/star-red.svg" alt="" />
+                <span>Уровень аккаунта</span>
+              </div>
+              <div class="stat-right">{{ account.level }} ({{ account.exp }})</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/ruble-red.svg" alt="" />
+                <span>Общее состояние</span>
+              </div>
+              <div class="stat-right">{{ totalMoney }}</div>
+            </div>
+
+            <div class="stat-row spoiler" [class.open]="transportOpen">
+              <button type="button" class="stat-left spoiler-btn" (click)="transportOpen = !transportOpen">
+                <img src="/icon/vehicle-red.svg" alt="" />
+                <span>Личный транспорт</span>
+                <svg class="chev" width="9" height="15" viewBox="0 0 9 15">
+                  <path d="M5.6,7.5L0,1.8L1.7,0L9,7.5L1.7,15L0,13.2L5.6,7.5z" fill="currentColor"/>
+                </svg>
+              </button>
+              @if (!cars.length) {
+                <div class="stat-right">Нет</div>
+              }
+            </div>
+
+            @if (transportOpen && cars.length) {
+              <div class="spoiler-body">
+                @for (car of cars; track $index) {
+                  <div class="car-block">
+                    <div class="car-title">{{ vehicleName(car.model) }}</div>
+                    <div class="car-row"><span>Номерной знак</span><span>{{ plate(car) }}</span></div>
+                    <div class="car-row"><span>Чип-тюнинг</span><span>Не установлен</span></div>
+                    <div class="car-row"><span>Стоимость</span><span>1 000 000 руб.</span></div>
+                    <div class="car-row"><span>Топливо</span><span>{{ car.fuel ?? 0 }}</span></div>
+                  </div>
+                }
+              </div>
+            }
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/house-red.svg" alt="" />
+                <span>Личное жильё</span>
+              </div>
+              <div class="stat-right">
+                {{ house ? formatPrice(house.hPrice || 0) : 'Нет' }}
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/business-red.svg" alt="" />
+                <span>Бизнес</span>
+              </div>
+              <div class="stat-right">Нет</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/foodtrack-red.svg" alt="" />
+                <span>Закусочная</span>
+              </div>
+              <div class="stat-right">Нет</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/pavilion-red.svg" alt="" />
+                <span>Павильон</span>
+              </div>
+              <div class="stat-right">Нет</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/heart-red.svg" alt="" />
+                <span>Семейное положение</span>
+              </div>
+              <div class="stat-right">Не женат</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/job-red.svg" alt="" />
+                <span>Работа</span>
+              </div>
+              <div class="stat-right">Нет</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/briefcase-red.svg" alt="" />
+                <span>Организация</span>
+              </div>
+              <div class="stat-right">{{ account.fractionName || 'Нет' }}</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/aim-red.svg" alt="" />
+                <span>Уровень розыска</span>
+              </div>
+              <div class="stat-right">{{ account.wanted }}</div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-left">
+                <img src="/icon/human-red.svg" alt="" />
+                <span>Скин</span>
+              </div>
+              <div class="stat-right">{{ account.skin }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+@if (avatarOpen) {
+  <div class="avatar-overlay" (click)="closeAvatar()">
+    <div class="avatar-modal" (click)="$event.stopPropagation()">
+      <div class="avatar-head">
+        <h3>Выберите аватар</h3>
+        <button type="button" class="av-close" (click)="closeAvatar()">×</button>
+      </div>
+      <div class="avatar-grid">
+        @for (a of avatars; track a.id) {
+          <button type="button" class="avatar-item" (click)="pickAvatar(a.src)">
+            <span class="avatar-item-image">
+              <img [src]="a.src" alt="" />
+            </span>
+            <span class="avatar-label">{{ a.label }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+<app-footer />

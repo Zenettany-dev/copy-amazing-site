@@ -1,0 +1,165 @@
+<div class="rich-editor">
+  <div class="toolbar">
+    <div class="group">
+      <button type="button" title="Жирный" (click)="exec('bold')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/bold.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Курсив" (click)="exec('italic')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/italic.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Подчёркнутый" (click)="exec('underline')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/underline.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Зачёркнутый" (click)="exec('strikeThrough')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/strikethrough.svg" width="18" height="18" alt="" />
+      </button>
+    </div>
+
+    <div class="group dropdown">
+      <button type="button" title="Шрифт" (click)="showFontMenu = !showFontMenu; showHeadingMenu = false">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/type.svg" width="18" height="18" alt="" />
+      </button>
+      @if (showFontMenu) {
+        <div class="menu">
+          @for (f of fonts; track f.name) {
+            <button type="button" [style.fontFamily]="f.css" (click)="setFont(f.css)">{{ f.name }}</button>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="group dropdown">
+      <button type="button" title="Заголовок" (click)="showHeadingMenu = !showHeadingMenu; showFontMenu = false">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/heading.svg" width="18" height="18" alt="" />
+      </button>
+      @if (showHeadingMenu) {
+        <div class="menu">
+          <button type="button" (click)="formatBlock('H1')">Заголовок 1</button>
+          <button type="button" (click)="formatBlock('H2')">Заголовок 2</button>
+          <button type="button" (click)="formatBlock('H3')">Заголовок 3</button>
+          <button type="button" (click)="formatBlock('P')">Обычный текст</button>
+        </div>
+      }
+    </div>
+
+    <div class="group">
+      <button type="button" title="Маркированный список" (click)="exec('insertUnorderedList')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/list.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Нумерованный список" (click)="exec('insertOrderedList')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/list-ordered.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Выйти из списка" (click)="breakList()">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/text-wrap.svg" width="18" height="18" alt="" />
+      </button>
+    </div>
+
+    <div class="group">
+      <button type="button" title="Влево" (click)="exec('justifyLeft')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/align-left.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Центр" (click)="exec('justifyCenter')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/align-center.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Вправо" (click)="exec('justifyRight')">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/align-right.svg" width="18" height="18" alt="" />
+      </button>
+    </div>
+
+    <div class="group dropdown">
+      <button type="button" title="Цвет текста" (click)="showColorPopup = !showColorPopup; showBgPopup = false">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/baseline.svg" width="18" height="18" alt="" />
+      </button>
+      @if (showColorPopup) {
+        <div class="palette">
+          <div class="palette-title">Цвет текста</div>
+          <div class="palette-row">
+            @for (c of colors; track c) {
+              <button type="button" class="swatch" [style.background]="c" (click)="pickColor(c)"></button>
+            }
+          </div>
+          <div class="hex-row">
+            <input type="text" [(ngModel)]="customColor" placeholder="#hex / rgba()" />
+            <button type="button" class="mini-ok" (click)="applyCustomColor()">OK</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="group dropdown">
+      <button type="button" title="Фон / блок" (click)="showBgPopup = !showBgPopup; showColorPopup = false">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/paint-bucket.svg" width="18" height="18" alt="" />
+      </button>
+      @if (showBgPopup) {
+        <div class="palette wide">
+          <div class="palette-title">Блоки</div>
+          <button type="button" class="preset green" (click)="applyBg('box-green')">Зелёный блок</button>
+          <button type="button" class="preset gray" (click)="applyBg('box-gray')">Серый блок</button>
+
+          <div class="palette-title">Фон выделения</div>
+          <div class="palette-row">
+            @for (c of colors; track c) {
+              <button type="button" class="swatch" [style.background]="c" (click)="applyBg(c)"></button>
+            }
+          </div>
+
+          <div class="palette-title">HEX / RGBA / градиент</div>
+          <div class="hex-row">
+            <input type="text" [(ngModel)]="customBg" placeholder="linear-gradient(90deg,#f72822,#fe802c)" />
+            <button type="button" class="mini-ok" (click)="applyCustomBg()">OK</button>
+          </div>
+
+          <div class="grad-presets">
+            <button type="button" class="grad" style="background:linear-gradient(90deg,#f72822,#fe802c)"
+              (click)="customBg='linear-gradient(90deg,#f72822,#fe802c)'; applyCustomBg()"></button>
+            <button type="button" class="grad" style="background:linear-gradient(90deg,#37a854,#4cd06e)"
+              (click)="customBg='linear-gradient(90deg,#37a854,#4cd06e)'; applyCustomBg()"></button>
+            <button type="button" class="grad" style="background:linear-gradient(90deg,#009ada,#4ac9ff)"
+              (click)="customBg='linear-gradient(90deg,#009ada,#4ac9ff)'; applyCustomBg()"></button>
+            <button type="button" class="grad" style="background:linear-gradient(135deg,#8500de,#ff3c00)"
+              (click)="customBg='linear-gradient(135deg,#8500de,#ff3c00)'; applyCustomBg()"></button>
+          </div>
+
+          <button type="button" class="preset" (click)="applyBg('none')">Убрать фон</button>
+        </div>
+      }
+    </div>
+
+    <div class="group">
+      <button type="button" title="Ссылка" (click)="openLink()">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/link.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Картинка" (click)="triggerImage()">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/image.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Разделитель" (click)="insertHrWithText()">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/separator-horizontal.svg" width="18" height="18" alt="" />
+      </button>
+      <button type="button" title="Сбросить формат" (click)="clearFormat()">
+        <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/remove-formatting.svg" width="18" height="18" alt="" />
+      </button>
+    </div>
+  </div>
+
+  @if (showLinkPopup) {
+    <div class="link-bar">
+      <span class="link-hint">Выдели текст → URL → Применить</span>
+      <input type="text" [(ngModel)]="linkUrl" placeholder="https://" (keydown.enter)="applyLink()" />
+      <button type="button" class="ok" (click)="applyLink()">Применить</button>
+      <button type="button" class="ghost" (click)="removeLink()">Убрать</button>
+      <button type="button" class="ghost" (click)="showLinkPopup = false">Отмена</button>
+    </div>
+  }
+
+  <div
+    #area
+    class="area"
+    contenteditable="true"
+    (input)="onInput()"
+    (mouseup)="onMouseUp()"
+    (keyup)="onKeyUp()"
+    (blur)="onTouched()"
+  ></div>
+
+  <input #fileInput type="file" accept="image/*" hidden (change)="onFile($event)" />
+</div>
